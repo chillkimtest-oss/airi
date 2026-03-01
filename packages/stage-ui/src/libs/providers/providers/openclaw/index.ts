@@ -24,6 +24,9 @@ export const providerOpenClaw = defineProvider<OpenClawConfig>({
   descriptionLocalize: ({ t }) => t('settings.pages.providers.provider.openclaw.description'),
   tasks: ['chat'],
   icon: 'i-ph:plugs-connected',
+  // OpenClaw defines its own agent identity via workspace files (SOUL.md, IDENTITY.md).
+  // Skip injecting the AIRI character system prompt so the agent's own identity is preserved.
+  skipSystemPrompt: true,
 
   createProviderConfig: ({ t }) => openClawConfigSchema.extend({
     apiKey: openClawConfigSchema.shape.apiKey.meta({
