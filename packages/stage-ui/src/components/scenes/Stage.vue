@@ -340,6 +340,7 @@ playbackManager.onEnd(({ item }) => {
 
 playbackManager.onStart(({ item }) => {
   nowSpeaking.value = true
+  console.log("[STAGE DEBUG] nowSpeaking set to true, lipSync:", !!live2dLipSync.value, "mouthOpenSize:", mouthOpenSize.value)
   // NOTICE: postCaption and postPresent may throw errors if the BroadcastChannel is closed
   // (e.g., when navigating away from the page). We wrap these in try-catch to prevent
   // breaking playback when the channel is unavailable.
@@ -368,6 +369,7 @@ function startLipSyncLoop() {
     }
     else {
       mouthOpenSize.value = live2dLipSync.value.getMouthOpen()
+      if (mouthOpenSize.value > 0.01) console.log("[STAGE DEBUG] mouth moving:", mouthOpenSize.value)
     }
     lipSyncLoopId.value = requestAnimationFrame(tick)
   }
@@ -376,6 +378,7 @@ function startLipSyncLoop() {
 }
 
 async function setupLipSync() {
+  console.log("[STAGE DEBUG] setupLipSync called, lipSyncStarted:", lipSyncStarted.value)
   if (lipSyncStarted.value)
     return
 
@@ -402,10 +405,12 @@ function setupAnalyser() {
 let currentChatIntent: ReturnType<typeof speechRuntimeStore.openIntent> | null = null
 
 chatHookCleanups.push(onBeforeMessageComposed(async () => {
+  console.log("[STAGE DEBUG] onBeforeMessageComposed fired")
   playbackManager.stopAll('new-message')
 
   setupAnalyser()
   await setupLipSync()
+  console.log("[STAGE DEBUG] setupLipSync done, started:", lipSyncStarted.value)
   // Reset assistant caption for a new message
   assistantCaption.value = ''
   try {
@@ -440,6 +445,7 @@ chatHookCleanups.push(onBeforeSend(async () => {
 }))
 
 chatHookCleanups.push(onTokenLiteral(async (literal) => {
+  console.log("[STAGE DEBUG] onTokenLiteral:", literal.slice(0, 50))
   currentChatIntent?.writeLiteral(literal)
 }))
 
