@@ -147,7 +147,7 @@ const emotionsQueue = createQueue<EmotionPayload>({
 const emotionMessageContentQueue = useEmotionsMessageQueue(emotionsQueue)
 emotionMessageContentQueue.onHandlerEvent('emotion', (emotion) => {
   // eslint-disable-next-line no-console
-  console.debug('emotion detected', emotion)
+  console.log('[STAGE DEBUG] emotion detected!', JSON.stringify(emotion))
 })
 
 const delaysQueue = useDelayMessageQueue()
@@ -158,6 +158,7 @@ delaysQueue.onHandlerEvent('delay', (delay) => {
 
 // Play special token: delay or emotion
 function playSpecialToken(special: string) {
+  console.log('[STAGE DEBUG] playSpecialToken:', special)
   delaysQueue.enqueue(special)
   emotionMessageContentQueue.enqueue(special)
 }
@@ -450,7 +451,7 @@ chatHookCleanups.push(onTokenLiteral(async (literal) => {
 }))
 
 chatHookCleanups.push(onTokenSpecial(async (special) => {
-  // console.debug('Stage received special token:', special)
+  console.log("[STAGE DEBUG] onTokenSpecial:", special)
   currentChatIntent?.writeSpecial(special)
 }))
 
