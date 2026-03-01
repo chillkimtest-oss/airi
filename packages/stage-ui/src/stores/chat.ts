@@ -10,6 +10,7 @@ import { nanoid } from 'nanoid'
 import { defineStore, storeToRefs } from 'pinia'
 import { ref, toRaw } from 'vue'
 
+import { getDefinedProvider } from '../libs/providers/providers/registry'
 import { useAnalytics } from '../composables'
 import { useLlmmarkerParser } from '../composables/llm-marker-parser'
 import { categorizeResponse, createStreamingCategorizer } from '../composables/response-categoriser'
@@ -280,6 +281,14 @@ export const useChatOrchestratorStore = defineStore('chat-orchestrator', () => {
           },
           ...afterSystem,
         ]
+      }
+
+      // When the active provider manages its own identity (e.g. OpenClaw uses workspace
+      // SOUL.md / IDENTITY.md), strip the AIRI character system message so the provider's
+      // own identity is not overridden. Stored messages are not modified — filtering is
+      // only applied to the copy sent to the API.
+      if (getDefinedProvider(activeProvider.value)?.skipSystemPrompt) {
+        newMessages = newMessages.filter(msg => (msg as { role: string }).role !== 'system')
       }
 
       streamingMessageContext.composedMessage = newMessages as Message[]

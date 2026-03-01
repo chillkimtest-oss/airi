@@ -124,6 +124,12 @@ export interface ProviderDefinition<TConfig extends any = any> {
     validateConfig?: Array<(contextOptions: { t: ComposerTranslation }) => { id: string, name: string, validator: (config: TConfig, contextOptions: { t: ComposerTranslation }) => MaybePromise<ProviderValidationResult> }>
     validateProvider?: Array<(contextOptions: { t: ComposerTranslation }) => { id: string, name: string, validator: (config: TConfig, provider: ProviderInstance, providerExtra: ProviderExtraMethods<TConfig>, contextOptions: { t: ComposerTranslation }) => MaybePromise<ProviderValidationResult> }>
   }
+  /**
+   * When true, the AIRI character system prompt is omitted before sending messages to this
+   * provider. Use this when the provider manages its own identity (e.g. OpenClaw workspace
+   * SOUL.md / IDENTITY.md) so it isn't overridden by the Airi character card.
+   */
+  skipSystemPrompt?: boolean
   capabilities?: {
     transcription?: {
       protocol: 'websocket' | 'http'
