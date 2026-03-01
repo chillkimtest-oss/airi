@@ -138,7 +138,7 @@ const emotionsQueue = createQueue<EmotionPayload>({
         await vrmViewerRef.value!.setExpression(value, ctx.data.intensity)
       }
       else if (stageModelRenderer.value === 'live2d') {
-        currentMotion.value = { group: EMOTION_EmotionMotionName_value[ctx.data.name] }
+        const motionGroup = EMOTION_EmotionMotionName_value[ctx.data.name]; console.log("[STAGE DEBUG] setting Live2D motion group:", motionGroup); currentMotion.value = { group: motionGroup }
       }
     },
   ],
