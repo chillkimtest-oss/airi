@@ -391,7 +391,7 @@ async function setupLipSync() {
     lipSyncStarted.value = true
   }
   catch (error) {
-    lipSyncStarted.value = false
+    lipSyncStarted.value = false; console.log("[STAGE DEBUG] lipSyncStarted set to FALSE", new Error().stack?.split("\n")[1])
     console.error('Failed to setup Live2D lip sync', error)
   }
 }
@@ -471,7 +471,7 @@ chatHookCleanups.push(onAssistantResponseEnd(async (_message) => {
 }))
 
 onUnmounted(() => {
-  lipSyncStarted.value = false
+  lipSyncStarted.value = false; console.log("[STAGE DEBUG] lipSyncStarted set to FALSE", new Error().stack?.split("\n")[1])
 })
 
 // Resume audio context on first user interaction (browser requirement)
