@@ -1,6 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { providerOpenClaw } from '../libs/providers/providers/openclaw'
 import { providerOpenAICompatible } from '../libs/providers/providers/openai-compatible'
 import { useProviderCatalogStore } from './provider-catalog'
 
@@ -55,5 +56,16 @@ describe('store provider-catalog', () => {
     store.removeProvider(providerId)
 
     expect(Object.values(store.configs)).toHaveLength(0)
+  })
+
+  it('add openclaw', () => {
+    const store = useProviderCatalogStore()
+    store.addProvider(providerOpenClaw.id)
+
+    expect(Object.values(store.configs)).toHaveLength(1)
+    expect(Object.values(store.configs)[0].id).toBeDefined()
+    expect(Object.values(store.configs)[0].definitionId).toBe(providerOpenClaw.id)
+    expect(Object.values(store.configs)[0].name).toBe('OpenClaw')
+    expect(Object.values(store.configs)[0].config).toStrictEqual({})
   })
 })
