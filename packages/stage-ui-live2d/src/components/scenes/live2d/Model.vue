@@ -385,8 +385,13 @@ async function setMotion(motionName: string, index?: number) {
 
   console.info('Setting motion:', motionName, 'index:', index)
   try {
-    await model.value.motion(motionName, index, MotionPriority.FORCE)
-    console.info('Motion started successfully:', motionName)
+    const result = await model.value.motion(motionName, index, MotionPriority.FORCE)
+    if (result === false) {
+      console.warn('[Live2D] Motion group not found or unavailable:', motionName)
+    }
+    else {
+      console.info('Motion started successfully:', motionName)
+    }
   }
   catch (error) {
     console.error('Failed to start motion:', motionName, error)
