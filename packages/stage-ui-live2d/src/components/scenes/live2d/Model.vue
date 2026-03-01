@@ -250,6 +250,7 @@ async function loadModel() {
     const motionManager = internalModel.motionManager
     coreModel.setParameterValueById('ParamMouthOpenY', mouthOpenSize.value)
 
+    console.log("[STAGE DEBUG] available motion groups:", Object.keys(motionManager.definitions))
     availableMotions.value = Object
       .entries(motionManager.definitions)
       .flatMap(([motionName, definition]) => (definition?.map((motion: any, index: number) => ({
@@ -383,7 +384,7 @@ async function setMotion(motionName: string, index?: number) {
     return
   }
 
-  console.info('Setting motion:', motionName, 'index:', index)
+  console.log('[STAGE DEBUG] setMotion called:', motionName, 'index:', index, 'model loaded:', !!model.value)
   try {
     await model.value.motion(motionName, index, MotionPriority.FORCE)
     console.info('Motion started successfully:', motionName)
