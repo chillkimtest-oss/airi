@@ -12,15 +12,15 @@ export enum Emotion {
 
 export const EMOTION_VALUES = Object.values(Emotion)
 
-export const EmotionHappyMotionName = 'Happy'
-export const EmotionSadMotionName = 'Sad'
-export const EmotionAngryMotionName = 'Angry'
-export const EmotionAwkwardMotionName = 'Awkward'
-export const EmotionThinkMotionName = 'Think'
-export const EmotionSurpriseMotionName = 'Surprise'
-export const EmotionQuestionMotionName = 'Question'
+export const EmotionHappyMotionName = 'Flick'
+export const EmotionSadMotionName = 'FlickDown'
+export const EmotionAngryMotionName = 'Tap'
+export const EmotionAwkwardMotionName = 'FlickDown'
+export const EmotionThinkMotionName = 'Idle'
+export const EmotionSurpriseMotionName = 'FlickUp'
+export const EmotionQuestionMotionName = 'FlickUp'
 export const EmotionNeutralMotionName = 'Idle'
-export const EmotionCuriousMotionName = 'Curious'
+export const EmotionCuriousMotionName = 'Flick'
 
 export const EMOTION_EmotionMotionName_value = {
   [Emotion.Happy]: EmotionHappyMotionName,
@@ -49,4 +49,6 @@ export const EMOTION_VRMExpressionName_value = {
 export interface EmotionPayload {
   name: Emotion
   intensity: number
+  /** Optional direct motion group override — bypasses the emotion-to-motion mapping */
+  motion?: string
 }
