@@ -759,6 +759,9 @@ pages:
       comet-api:
         description: CometAPI.com
         title: Comet API
+      openclaw:
+        description: Self-hosted OpenClaw gateway (OpenAI-compatible)
+        title: OpenClaw
       cerebras:
         description: cerebras.ai
         title: Cerebras
