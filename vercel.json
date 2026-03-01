@@ -1,0 +1,6 @@
+{
+  "buildCommand": "pnpm install && pnpm build:web",
+  "outputDirectory": "apps/stage-web/dist",
+  "installCommand": "corepack enable && pnpm install",
+  "framework": null
+}
